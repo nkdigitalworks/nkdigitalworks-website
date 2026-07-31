@@ -11,7 +11,9 @@
  * feature descriptions, layout or navigation detail, AI boundaries, integrations,
  * plans or pricing.
  *
- * `url` is a canonical placeholder — confirm the production domain before launch.
+ * `url` is the canonical production domain (apex, no www). It is the single
+ * source for metadataBase, canonical tags, Open Graph/Twitter URLs, sitemap.xml
+ * entries and the robots.txt host — change it here and nowhere else.
  */
 export const site = {
   name: "NK Digital Works",
@@ -20,7 +22,7 @@ export const site = {
   studio:
     "NK Digital Works is an independent software studio creating intelligent, human-centred digital products with clarity, care and purpose.",
   email: "hello@nkdigitalworks.com",
-  url: "https://www.nkdigitalworks.com",
+  url: "https://nkdigitalworks.com",
 } as const;
 
 export const seo = {
