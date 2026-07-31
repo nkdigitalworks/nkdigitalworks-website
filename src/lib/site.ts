@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 /**
  * Public content model for the NoorLife pre-launch page.
  *
@@ -30,6 +32,25 @@ export const seo = {
   description:
     "NK Digital Works is creating NoorLife, a new intelligent digital experience currently in private development.",
 } as const;
+
+/**
+ * Open Graph fields shared by every route, minus `url`.
+ *
+ * Next.js merges metadata *shallowly*, so a page that declares `openGraph`
+ * replaces the parent's object outright. Each route therefore spreads this base
+ * and adds only its own `url`, which keeps og:type, og:site_name, og:locale,
+ * og:title and og:description identical everywhere.
+ *
+ * `url` is always given as a path and resolved against `metadataBase`, so the
+ * production hostname is never repeated outside `site.url`.
+ */
+export const baseOpenGraph = {
+  type: "website",
+  siteName: site.name,
+  title: seo.title,
+  description: seo.description,
+  locale: "en_GB",
+} satisfies NonNullable<Metadata["openGraph"]>;
 
 export const mailto = `mailto:${site.email}`;
 

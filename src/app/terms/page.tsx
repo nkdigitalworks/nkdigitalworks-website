@@ -6,7 +6,7 @@ import {
   LegalSection,
   PageHero,
 } from "@/components/ui/page-shell";
-import { mailto, site } from "@/lib/site";
+import { baseOpenGraph, mailto, site } from "@/lib/site";
 
 /**
  * Initial website terms of use. Intentionally states no registered company
@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   title: "Terms of Use",
   description: `The terms that apply to visitors of the ${site.name} website.`,
   alternates: { canonical: "/terms" },
+  // Spread the shared base so og:type/site_name/locale/title/description stay
+  // identical to every other route; only `url` is page-specific.
+  openGraph: { ...baseOpenGraph, url: "/terms" },
 };
 
 /** Fixed, human-readable effective date — not generated per request. */

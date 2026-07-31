@@ -3,7 +3,7 @@ import { Inter, Manrope } from "next/font/google";
 
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { seo, site } from "@/lib/site";
+import { baseOpenGraph, seo, site } from "@/lib/site";
 import "./globals.css";
 
 const inter = Inter({
@@ -39,14 +39,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   // No `images` entry: there is no real OG asset yet, and a fabricated one
   // would be worse than none. Add one when brand artwork exists.
-  openGraph: {
-    type: "website",
-    siteName: site.name,
-    title: seo.title,
-    description: seo.description,
-    url: "/",
-    locale: "en_GB",
-  },
+  openGraph: { ...baseOpenGraph, url: "/" },
   twitter: {
     card: "summary",
     title: seo.title,

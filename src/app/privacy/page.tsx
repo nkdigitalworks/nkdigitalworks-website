@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { LegalBody, LegalSection, PageHero } from "@/components/ui/page-shell";
-import { mailto, site } from "@/lib/site";
+import { baseOpenGraph, mailto, site } from "@/lib/site";
 
 /**
  * Initial privacy policy for the marketing website. Every statement below
@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   title: "Privacy Policy",
   description: `How ${site.name} handles information collected through this website and through project enquiries sent by email.`,
   alternates: { canonical: "/privacy" },
+  // Spread the shared base so og:type/site_name/locale/title/description stay
+  // identical to every other route; only `url` is page-specific.
+  openGraph: { ...baseOpenGraph, url: "/privacy" },
 };
 
 /** Fixed, human-readable effective date — not generated per request. */
