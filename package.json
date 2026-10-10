@@ -3,10 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/lumitale-legal-gate.mjs --dev",
     "dev": "next dev",
+    "prebuild": "node scripts/lumitale-legal-gate.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "sync:lumitale": "node scripts/sync-lumitale.mjs",
+    "test": "node --test \"tests/*.test.mjs\""
   },
   "dependencies": {
     "next": "16.2.12",

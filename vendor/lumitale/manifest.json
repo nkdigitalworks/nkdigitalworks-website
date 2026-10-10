@@ -1,0 +1,16 @@
+{
+  "source": "LumiTale V2 repository",
+  "sourceCommit": "a0b9b5026c6f1302145685c84634b8aa2e35bbbf",
+  "sourceClean": true,
+  "publishCheck": {
+    "ready": false,
+    "summary": "WEBSITE PUBLISH: NOT READY (2 of 6 failed)"
+  },
+  "legalIncluded": false,
+  "legal": {},
+  "product": {
+    "lumitale-app-icon.png": "896cff01a8dc630679cafcd2466f5a2685ec4e5781b4bd22ba5e2679ebbbe356",
+    "lumitale-hero.png": "07dc27dc685d1de4b19297870c054b69d4c3da14f6e334c1af30d35b666ade93",
+    "lumitale-wordmark.png": "691fd5d12a23d3270b2188919dac17dbd5a089a7b93dddaa880826dd30e0fa8e"
+  }
+}

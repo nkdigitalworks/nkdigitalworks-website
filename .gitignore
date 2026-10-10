@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# LumiTale legal pages: placed here only by scripts/lumitale-legal-gate.mjs at
+# build/dev time; never committed (Phase 3J-AU)
+/public/lumitale/

@@ -1,0 +1,6 @@
+# Synced LumiTale copies are hash-verified byte for byte (Phase 3J-AU): keep
+# text files LF on every platform and never convert binaries.
+vendor/lumitale/** text=auto eol=lf
+vendor/lumitale/**/*.png binary
+vendor/lumitale/**/*.ttf binary
+public/apps/lumitale/** binary
