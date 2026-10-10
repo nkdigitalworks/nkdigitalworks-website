@@ -48,6 +48,14 @@ export function SiteFooter() {
             <ul className="flex flex-wrap items-center gap-x-6 lg:justify-end">
               <li>
                 <Link
+                  href="/apps"
+                  className="inline-flex min-h-11 items-center text-[0.9375rem] text-mist/80 transition-colors duration-200 hover:text-paper"
+                >
+                  Our Apps
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/#signal"
                   className="inline-flex min-h-11 items-center text-[0.9375rem] text-mist/80 transition-colors duration-200 hover:text-paper"
                 >

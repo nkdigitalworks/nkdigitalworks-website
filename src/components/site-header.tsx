@@ -1,14 +1,21 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { navItems } from "@/lib/site";
 
 const FOCUSABLE = "a[href], button:not([disabled])";
 
-/** Compact sticky header: brand mark, four section links, one call to action. */
+/** The current section: "/" only on the homepage; other routes by prefix. */
+function isCurrent(pathname: string, href: string): boolean {
+  return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
+}
+
+/** Compact sticky header: brand mark, company navigation, status pill. */
 export function SiteHeader() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const mobileRef = useRef<HTMLDivElement>(null);
@@ -104,7 +111,8 @@ export function SiteHeader() {
               <li key={item.label}>
                 <Link
                   href={item.href}
-                  className="flex min-h-11 items-center rounded-full px-3.5 text-sm font-medium text-mist transition-colors duration-200 hover:bg-white/5 hover:text-paper"
+                  aria-current={isCurrent(pathname, item.href) ? "page" : undefined}
+                  className="flex min-h-11 items-center rounded-full px-3.5 text-sm font-medium text-mist transition-colors duration-200 hover:bg-white/5 hover:text-paper aria-[current=page]:bg-white/8 aria-[current=page]:text-paper"
                 >
                   {item.label}
                 </Link>
@@ -168,7 +176,8 @@ export function SiteHeader() {
                     <Link
                       href={item.href}
                       onClick={close}
-                      className="block py-4 font-display text-lg font-semibold text-paper"
+                      aria-current={isCurrent(pathname, item.href) ? "page" : undefined}
+                      className="block py-4 font-display text-lg font-semibold text-paper aria-[current=page]:text-azure"
                     >
                       {item.label}
                     </Link>

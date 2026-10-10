@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 
 /**
- * Public content model for the NoorLife pre-launch page.
+ * Public content model for the NoorLife pre-launch page and the shared site
+ * chrome.
  *
- * DISCLOSURE BOUNDARY — this file compiles into the public bundle. It may carry
- * only: that NK Digital Works is building its first product, that the product is
- * called NoorLife, that it is an intelligent, human-centred digital experience
- * being designed thoughtfully, that it is coming to mobile, and that it is in
- * private development.
+ * DISCLOSURE BOUNDARY (NoorLife) — this file compiles into the public bundle.
+ * About NoorLife it may carry only: that NK Digital Works is building it, that
+ * the product is called NoorLife, that it is an intelligent, human-centred
+ * digital experience being designed thoughtfully, that it is coming to mobile,
+ * and that it is in private development. (Other applications have their own
+ * pages and content models in src/lib/apps.ts; Phase 3J-AU.)
  *
  * It must NOT carry internal structure names or counts, product categories,
  * feature descriptions, layout or navigation detail, AI boundaries, integrations,
@@ -61,11 +63,16 @@ export const enquiryMailto = `${mailto}?subject=${encodeURIComponent(
 
 export type NavItem = { label: string; href: string };
 
-/** Minimal navigation — three entries, none naming internal structure. */
+/**
+ * Company navigation (Phase 3J-AU): routes, none naming NoorLife's internal
+ * structure. The homepage's own anchors (/#signal, /#about, /#contact) keep
+ * working, and "The Signal" stays in the footer.
+ */
 export const navItems: NavItem[] = [
-  { label: "The Signal", href: "/#signal" },
-  { label: "About", href: "/#about" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Our Apps", href: "/apps" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export const legalLinks: NavItem[] = [
