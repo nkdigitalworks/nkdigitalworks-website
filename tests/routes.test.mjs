@@ -49,7 +49,7 @@ const gate = (env = {}) =>
     encoding: "utf8",
   });
 
-const PAGES = ["/", "/about", "/apps", "/apps/lumitale", "/contact", "/privacy", "/terms"];
+const PAGES = ["/", "/about", "/apps", "/apps/noorlife", "/apps/lumitale", "/contact", "/privacy", "/terms"];
 
 describe("production build (LumiTale legal pages withheld)", { skip: !built && "run npm run build first" }, () => {
   let server;
@@ -74,8 +74,28 @@ describe("production build (LumiTale legal pages withheld)", { skip: !built && "
     assert.equal(titles.size, PAGES.length, "titles are unique");
   });
 
-  test("the NoorLife homepage is preserved", () => {
+  test("the homepage is the NK Digital Works company homepage (3J-AX)", () => {
     const home = html["/"].body;
+    assert.ok(home.includes("<title>NK Digital Works — Thoughtful technology, taking shape.</title>"));
+    assert.match(home, /<h1[^>]*>Thoughtful technology, taking shape\.<\/h1>/);
+    for (const href of ['href="/apps/noorlife"', 'href="/apps/lumitale"', 'href="/apps"', 'href="/about"', 'href="/contact"']) {
+      assert.ok(home.includes(href), href);
+    }
+    // Legacy anchors still land somewhere: #top/#about/#contact exist here.
+    for (const id of ['id="top"', 'id="about"', 'id="contact"']) assert.ok(home.includes(id), id);
+    // NoorLife's own sections are no longer the homepage.
+    for (const text of ["Not another app. A more thoughtful way forward.", "Built quietly. Revealed carefully.", 'id="signal"']) {
+      assert.ok(!home.includes(text), `not on the homepage: ${text}`);
+    }
+    assert.ok(home.includes('href="https://nkdigitalworks.com"'), "canonical stays the apex");
+    // Nothing invented: no testimonial, client, award or founding claims.
+    for (const claim of ["testimonial", "trusted by", "award", "founded in", "clients"]) {
+      assert.ok(!home.toLowerCase().includes(claim), claim);
+    }
+  });
+
+  test("NoorLife has its own page with the original content (3J-AX)", () => {
+    const home = html["/apps/noorlife"].body;
     for (const text of [
       "Something thoughtful is taking shape.",
       "Not another app. A more thoughtful way forward.",
@@ -90,20 +110,20 @@ describe("production build (LumiTale legal pages withheld)", { skip: !built && "
       assert.ok(home.includes(text), text);
     }
     assert.ok(home.includes("<title>NoorLife — Something Thoughtful Is Taking Shape</title>"));
-    assert.ok(home.includes('href="https://nkdigitalworks.com"'), "canonical stays the apex");
+    assert.ok(home.includes('href="https://nkdigitalworks.com/apps/noorlife"'), "own canonical URL");
   });
 
-  test("navigation: Home, About, Our Apps, Contact; existing anchors still in the footer", () => {
+  test("navigation: Home, About, Our Apps, Contact; footer reaches both apps and the policies", () => {
     const home = html["/"].body;
-    for (const href of ['href="/about"', 'href="/apps"', 'href="/contact"', 'href="/#signal"', 'href="/privacy"', 'href="/terms"']) {
+    for (const href of ['href="/about"', 'href="/apps"', 'href="/contact"', 'href="/apps/noorlife"', 'href="/apps/lumitale"', 'href="/privacy"', 'href="/terms"']) {
       assert.ok(home.includes(href), href);
     }
     assert.ok(html["/apps"].body.includes('aria-current="page"'), "active route is marked");
   });
 
-  test("the portfolio lists NoorLife (its page is /) and LumiTale", () => {
+  test("the portfolio lists NoorLife and LumiTale with their own pages", () => {
     const apps = html["/apps"].body;
-    assert.ok(apps.includes(">NoorLife</a>") && apps.includes('href="/"'));
+    assert.ok(apps.includes(">NoorLife</a>") && apps.includes('href="/apps/noorlife"'));
     assert.ok(apps.includes('href="/apps/lumitale"') && apps.includes(">LumiTale</a>"));
     assert.ok(apps.includes("Private development"));
     assert.ok(apps.includes("In development"));
@@ -142,14 +162,19 @@ describe("production build (LumiTale legal pages withheld)", { skip: !built && "
 
   test("sitemap lists the company pages and no withheld policy", async () => {
     const xml = await (await fetch(`${server.base}/sitemap.xml`)).text();
-    for (const p of ["/about", "/apps", "/apps/lumitale", "/contact"]) {
+    for (const p of ["/about", "/apps", "/apps/noorlife", "/apps/lumitale", "/contact"]) {
       assert.ok(xml.includes(`https://nkdigitalworks.com${p}</loc>`), p);
     }
     assert.ok(!xml.includes("/lumitale/"), "no LumiTale policy URLs");
   });
 
-  test("no secret or privileged key in the build output or the synced copy", () => {
-    const pattern = /sb_secret_[A-Za-z0-9_-]{10,}|sk-ant-[A-Za-z0-9_-]{10,}|"role":"service_role"|-----BEGIN [A-Z ]*PRIVATE KEY-----/;
+  test("the company website policies stay where they were, unchanged in meaning", () => {
+    assert.ok(html["/privacy"].body.includes("Effective 30 July 2026"));
+    assert.ok(html["/terms"].body.includes("These terms apply to your use of the NK Digital Works website."));
+  });
+
+  test("no secret, privileged key or LumiTale draft text in the build output", () => {
+    const pattern = /sb_secret_[A-Za-z0-9_-]{10,}|sk-ant-[A-Za-z0-9_-]{10,}|"role":"service_role"|-----BEGIN [A-Z ]*PRIVATE KEY-----|LEGAL REVIEW REQUIRED|data-legal-review|Verified technical facts/;
     const scan = (dir) => {
       for (const name of readdirSync(dir)) {
         const full = path.join(dir, name);
@@ -160,6 +185,12 @@ describe("production build (LumiTale legal pages withheld)", { skip: !built && "
       }
     };
     for (const dir of [".next/static", ".next/server/app", "public", "vendor"]) scan(path.join(ROOT, dir));
+  });
+
+  test("no deployment hook in the repository (a push is the only release path)", () => {
+    const pkg = JSON.parse(readFileSync(path.join(ROOT, "package.json"), "utf8"));
+    for (const name of Object.keys(pkg.scripts)) assert.ok(!/deploy|vercel|release/i.test(name + pkg.scripts[name]), name);
+    assert.ok(!existsSync(path.join(ROOT, ".vercel")), "no local Vercel project link");
   });
 });
 
