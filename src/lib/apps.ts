@@ -47,8 +47,8 @@ export const apps: AppEntry[] = [
       "A new intelligent digital experience, designed for mobile and currently in private development.",
     status: "private-development",
     statusLabel: "Private development · Coming soon",
-    // NoorLife's existing page is the homepage; its URL is unchanged.
-    href: "/",
+    // NoorLife's own page (Phase 3J-AX; formerly the homepage).
+    href: "/apps/noorlife",
     artwork: {
       src: "/images/noorlife/noorlife-logo-robot-pointing-transparent.png",
       width: 1536,

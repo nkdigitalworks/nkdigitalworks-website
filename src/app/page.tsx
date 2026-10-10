@@ -1,17 +1,33 @@
-import { AbstractPrinciples } from "@/components/sections/abstract-principles";
-import { Contact } from "@/components/sections/contact";
-import { MysteryHero } from "@/components/sections/mystery-hero";
-import { PrivateDevelopment } from "@/components/sections/private-development";
-import { ProductSignal } from "@/components/sections/product-signal";
+import type { Metadata } from "next";
+
+import { CompanyApps } from "@/components/sections/company-apps";
+import { CompanyHero } from "@/components/sections/company-hero";
+import {
+  CompanyApproach,
+  CompanyContact,
+  CompanyIntro,
+} from "@/components/sections/company-sections";
+import { LegacyNoorLifeAnchors } from "@/components/sections/legacy-anchors";
+import { baseOpenGraph } from "@/lib/site";
+
+/*
+ * NK Digital Works company homepage (Phase 3J-AX). NoorLife's former homepage
+ * content lives unchanged at /apps/noorlife; LumiTale at /apps/lumitale.
+ */
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+  openGraph: { ...baseOpenGraph, url: "/" },
+};
 
 export default function Home() {
   return (
     <>
-      <MysteryHero />
-      <ProductSignal />
-      <AbstractPrinciples />
-      <PrivateDevelopment />
-      <Contact />
+      <LegacyNoorLifeAnchors />
+      <CompanyHero />
+      <CompanyIntro />
+      <CompanyApps />
+      <CompanyApproach />
+      <CompanyContact />
     </>
   );
 }

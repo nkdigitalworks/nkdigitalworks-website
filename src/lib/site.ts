@@ -29,10 +29,18 @@ export const site = {
   url: "https://nkdigitalworks.com",
 } as const;
 
+/** NoorLife's page (/apps/noorlife since Phase 3J-AX; formerly the homepage). */
 export const seo = {
   title: "NoorLife — Something Thoughtful Is Taking Shape",
   description:
     "NK Digital Works is creating NoorLife, a new intelligent digital experience currently in private development.",
+} as const;
+
+/** The company homepage and company-level pages (Phase 3J-AX). */
+export const companySeo = {
+  title: "NK Digital Works — Thoughtful technology, taking shape.",
+  description:
+    "NK Digital Works is an independent software studio building mobile applications, including NoorLife and LumiTale.",
 } as const;
 
 /**
@@ -49,8 +57,8 @@ export const seo = {
 export const baseOpenGraph = {
   type: "website",
   siteName: site.name,
-  title: seo.title,
-  description: seo.description,
+  title: companySeo.title,
+  description: companySeo.description,
   locale: "en_GB",
 } satisfies NonNullable<Metadata["openGraph"]>;
 
@@ -64,9 +72,10 @@ export const enquiryMailto = `${mailto}?subject=${encodeURIComponent(
 export type NavItem = { label: string; href: string };
 
 /**
- * Company navigation (Phase 3J-AU): routes, none naming NoorLife's internal
- * structure. The homepage's own anchors (/#signal, /#about, /#contact) keep
- * working, and "The Signal" stays in the footer.
+ * Company navigation (Phase 3J-AU/AX): routes, none naming NoorLife's
+ * internal structure. Each application is reached through Our Apps and has
+ * its own page; legacy homepage anchors are handled on "/" (see
+ * src/components/sections/legacy-anchors.tsx).
  */
 export const navItems: NavItem[] = [
   { label: "Home", href: "/" },

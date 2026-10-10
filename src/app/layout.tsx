@@ -3,7 +3,7 @@ import { Inter, Manrope } from "next/font/google";
 
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { baseOpenGraph, seo, site } from "@/lib/site";
+import { baseOpenGraph, companySeo, site } from "@/lib/site";
 import "./globals.css";
 
 const inter = Inter({
@@ -21,18 +21,19 @@ const manrope = Manrope({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: seo.title,
+    // The company homepage (Phase 3J-AX); NoorLife's page sets its own.
+    default: companySeo.title,
     template: `%s — ${site.name}`,
   },
-  description: seo.description,
+  description: companySeo.description,
   applicationName: site.name,
   // Deliberately free of feature, module and category terms.
   keywords: [
-    "NoorLife",
     "NK Digital Works",
-    "coming soon",
-    "private development",
     "independent software studio",
+    "mobile applications",
+    "NoorLife",
+    "LumiTale",
   ],
   authors: [{ name: site.name }],
   creator: site.name,
@@ -42,8 +43,8 @@ export const metadata: Metadata = {
   openGraph: { ...baseOpenGraph, url: "/" },
   twitter: {
     card: "summary",
-    title: seo.title,
-    description: seo.description,
+    title: companySeo.title,
+    description: companySeo.description,
   },
   robots: {
     index: true,
