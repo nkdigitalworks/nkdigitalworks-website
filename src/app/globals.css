@@ -24,6 +24,15 @@
   --color-mist: #bfc8d9;
   --color-dim: #808da6;
 
+  /* LumiTale product section only (Phase 3J-AU): the app's approved Option A
+     tokens. Never used for company-wide chrome. */
+  --color-lt-night: #0a0e2a;
+  --color-lt-surface: #1b193d;
+  --color-lt-primary: #6c63ff;
+  --color-lt-secondary: #8c5cff;
+  --color-lt-gold: #ffd166;
+  --color-lt-soft: #b8c4ff;
+
   --shadow-lift: 0 24px 70px -30px rgb(3 6 15 / 0.9);
   --shadow-glow:
     0 0 0 1px rgb(47 107 255 / 0.18), 0 30px 80px -40px rgb(47 107 255 / 0.55);
