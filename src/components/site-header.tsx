@@ -20,6 +20,7 @@ export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const mobileRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   const close = useCallback(() => setOpen(false), []);
 
@@ -40,10 +41,11 @@ export function SiteHeader() {
     };
   }, [open]);
 
-  // Move focus into the panel on open.
+  // Move focus into the panel on open (its first link, not the toggle that
+  // shares the wrapper; fixed in Phase 3J-AX).
   useEffect(() => {
     if (!open) return;
-    mobileRef.current?.querySelector<HTMLElement>(FOCUSABLE)?.focus();
+    panelRef.current?.querySelector<HTMLElement>(FOCUSABLE)?.focus();
   }, [open]);
 
   // Escape closes; Tab cycles within the panel.
@@ -91,7 +93,7 @@ export function SiteHeader() {
     >
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-6 px-6 lg:px-8">
         <Link
-          href="/#top"
+          href="/"
           onClick={close}
           className="group flex items-baseline gap-2 rounded-md text-base tracking-[-0.015em] whitespace-nowrap"
         >
@@ -120,19 +122,6 @@ export function SiteHeader() {
             ))}
           </ul>
         </nav>
-
-        {/* Coming Soon status dot — the label carries the meaning, not the colour */}
-        <p className="hidden items-center gap-2.5 rounded-full border border-white/10 bg-white/4 px-3.5 py-1.5 md:inline-flex">
-          <span className="relative flex size-1.5 shrink-0">
-            <span
-              aria-hidden="true"
-              className="animate-breathe absolute inset-0 rounded-full bg-aqua shadow-[0_0_10px_2px_rgb(36_212_238/0.6)]"
-            />
-          </span>
-          <span className="text-xs font-semibold tracking-[0.14em] text-mist uppercase">
-            Coming soon
-          </span>
-        </p>
 
         {/* Mobile: toggle plus panel share a wrapper so focus can cycle. */}
         <div ref={mobileRef} className="md:hidden">
@@ -165,6 +154,7 @@ export function SiteHeader() {
           </button>
 
           <div
+            ref={panelRef}
             id="mobile-navigation"
             hidden={!open}
             className="fixed inset-x-0 top-16 bottom-0 overflow-y-auto border-t border-white/10 bg-ink/97 backdrop-blur-2xl"
@@ -184,15 +174,6 @@ export function SiteHeader() {
                   </li>
                 ))}
               </ul>
-              <p className="mt-8 flex items-center gap-2.5 rounded-full border border-white/10 bg-white/4 px-4 py-3">
-                <span
-                  aria-hidden="true"
-                  className="animate-breathe size-1.5 shrink-0 rounded-full bg-aqua"
-                />
-                <span className="text-xs font-semibold tracking-[0.14em] text-mist uppercase">
-                  NoorLife &bull; Coming soon
-                </span>
-              </p>
             </nav>
           </div>
         </div>

@@ -24,14 +24,17 @@ export default function NotFound() {
             That page does not exist.
           </h1>
           <p className="mt-6 text-base leading-relaxed text-mist/85 sm:text-lg">
-            The link may be out of date, or the page may have moved. Everything
-            about NoorLife lives on the homepage.
+            The link may be out of date, or the page may have moved. Each of
+            our applications has its own page under Our Apps.
           </p>
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
             <ButtonLink href="/" size="lg" arrow>
               Back to home
             </ButtonLink>
-            <ButtonLink href={mailto} variant="secondary" size="lg">
+            <ButtonLink href="/apps" variant="secondary" size="lg">
+              Our apps
+            </ButtonLink>
+            <ButtonLink href={mailto} variant="quiet" size="lg">
               Email us
             </ButtonLink>
           </div>

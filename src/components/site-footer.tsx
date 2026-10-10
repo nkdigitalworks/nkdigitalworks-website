@@ -1,9 +1,33 @@
 import Link from "next/link";
 
 import { Container } from "@/components/ui/section";
-import { legalLinks, mailto, site } from "@/lib/site";
+import { apps } from "@/lib/apps";
+import { legalLinks, mailto, navItems, site } from "@/lib/site";
 
-/** Minimal footer. No product description beyond the private-development status. */
+const linkClass =
+  "inline-flex min-h-11 items-center text-[0.9375rem] text-mist/80 transition-colors duration-200 hover:text-paper";
+
+function FooterColumn({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <h2 className="text-xs font-semibold tracking-[0.2em] text-dim uppercase">
+        {label}
+      </h2>
+      <ul className="mt-2 flex flex-col">{children}</ul>
+    </div>
+  );
+}
+
+/**
+ * Company footer (Phase 3J-AX): the studio, its applications (from the shared
+ * data model) and the company website policies. No product claims.
+ */
 export function SiteFooter() {
   return (
     <footer className="relative overflow-hidden border-t border-white/8 bg-navy/60">
@@ -13,10 +37,10 @@ export function SiteFooter() {
       />
 
       <Container className="relative py-12">
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+        <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <Link
-              href="/#top"
+              href="/"
               className="flex items-baseline gap-2 text-base tracking-[-0.015em]"
             >
               <span className="font-display font-extrabold text-paper">NK</span>
@@ -32,55 +56,43 @@ export function SiteFooter() {
             <p className="mt-4 max-w-xs text-[0.9375rem] leading-relaxed text-mist/75">
               {site.statement}
             </p>
-
-            <p className="mt-5 inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/4 px-4 py-2">
-              <span
-                aria-hidden="true"
-                className="size-1.5 shrink-0 rounded-full bg-aqua"
-              />
-              <span className="text-xs font-semibold tracking-[0.14em] text-mist uppercase">
-                {site.product} &bull; Private development
-              </span>
-            </p>
           </div>
 
-          <nav aria-label="Footer">
-            <ul className="flex flex-wrap items-center gap-x-6 lg:justify-end">
-              <li>
-                <Link
-                  href="/apps"
-                  className="inline-flex min-h-11 items-center text-[0.9375rem] text-mist/80 transition-colors duration-200 hover:text-paper"
-                >
-                  Our Apps
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/#signal"
-                  className="inline-flex min-h-11 items-center text-[0.9375rem] text-mist/80 transition-colors duration-200 hover:text-paper"
-                >
-                  The Signal
-                </Link>
-              </li>
+          <nav aria-label="Footer" className="grid grid-cols-2 gap-x-12 gap-y-8 sm:grid-cols-3">
+            <FooterColumn label="Company">
+              {navItems
+                .filter((item) => item.href !== "/")
+                .map((item) => (
+                  <li key={item.href}>
+                    <Link href={item.href} className={linkClass}>
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+            </FooterColumn>
+            <FooterColumn label="Apps">
+              {apps.map((app) => (
+                <li key={app.slug}>
+                  <Link href={app.href} className={linkClass}>
+                    {app.name}
+                  </Link>
+                </li>
+              ))}
+            </FooterColumn>
+            <FooterColumn label="Website">
               {legalLinks.map((link) => (
                 <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="inline-flex min-h-11 items-center text-[0.9375rem] text-mist/80 transition-colors duration-200 hover:text-paper"
-                  >
+                  <Link href={link.href} className={linkClass}>
                     {link.label}
                   </Link>
                 </li>
               ))}
               <li>
-                <a
-                  href={mailto}
-                  className="inline-flex min-h-11 items-center text-[0.9375rem] text-mist/80 transition-colors duration-200 hover:text-paper"
-                >
+                <a href={mailto} className={linkClass}>
                   Email
                 </a>
               </li>
-            </ul>
+            </FooterColumn>
           </nav>
         </div>
 
