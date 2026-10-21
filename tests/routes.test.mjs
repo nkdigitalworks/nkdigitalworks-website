@@ -191,7 +191,7 @@ describe("production build (LumiTale legal pages withheld)", { skip: !built && "
   });
 
   test("no secret, privileged key or LumiTale draft text in the build output", () => {
-    const pattern = /sb_secret_[A-Za-z0-9_-]{10,}|sk-ant-[A-Za-z0-9_-]{10,}|"role":"service_role"|-----BEGIN [A-Z ]*PRIVATE KEY-----|LEGAL REVIEW REQUIRED|data-legal-review|Verified technical facts/;
+    const pattern = /sb_secret_[A-Za-z0-9_-]{10,}|sk-ant-[A-Za-z0-9_-]{10,}|"role":"service_role"|-----BEGIN [A-Z ]*PRIVATE KEY-----|LEGAL REVIEW REQUIRED|data-legal-review|data-legal-decision|data-draft-banner/;
     const scan = (dir) => {
       for (const name of readdirSync(dir)) {
         const full = path.join(dir, name);
@@ -261,7 +261,7 @@ describe("local draft preview (never on Vercel)", {
     for (const route of ["privacy", "terms", "delete-account"]) {
       const html = await (await fetch(`${server.base}/lumitale/${route}`)).text();
       assert.ok(html.includes('<meta name="robots" content="noindex">'), route);
-      assert.ok(html.includes('data-legal-decision="required"') && html.includes("OWNER AND COUNSEL DECISIONS REQUIRED"), route);
+      assert.ok(html.includes('data-legal-review="required"') && html.includes('data-legal-decision="required"'), route);
     }
     const deletion = await (await fetch(`${server.base}/lumitale/delete-account`)).text();
     assert.match(deletion, /<form id="signin"[^>]*\bhidden\b/);
