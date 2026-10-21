@@ -11,7 +11,7 @@ import {
   lumitaleSafety,
   lumitaleSupport,
 } from "@/lib/lumitale";
-import { lumitaleLegalPages, lumitaleLegalPublished } from "@/lib/lumitale-legal";
+import { lumitaleLegalPages, lumitaleLegalState } from "@/lib/lumitale-legal";
 import { baseOpenGraph, site } from "@/lib/site";
 
 /*
@@ -79,7 +79,7 @@ function Block({
 }
 
 export default function LumiTalePage() {
-  const legalPublished = lumitaleLegalPublished();
+  const legalState = lumitaleLegalState();
 
   return (
     <div className="bg-lt-night">
@@ -187,26 +187,52 @@ export default function LumiTalePage() {
           </Block>
         </div>
 
-        {/* 11. LumiTale legal pages (never linked unless published) */}
+        {/* 11. LumiTale legal pages: linked only when they exist (published,
+            or as a local draft preview that never reaches Vercel) */}
         <Block id="legal" title="Policies">
-          {legalPublished ? (
-            <ul className="flex flex-wrap gap-x-8 gap-y-2">
-              {lumitaleLegalPages.map((page) => (
-                <li key={page.href}>
-                  <a
-                    href={page.href}
-                    className="inline-flex min-h-11 items-center text-white underline decoration-lt-gold/60 underline-offset-4 hover:decoration-lt-gold"
-                  >
-                    {page.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
+          {legalState === "withheld" ? (
+            <>
+              <p className="text-[0.9375rem] leading-relaxed text-lt-soft">
+                LumiTale&apos;s Privacy Policy, Terms of Service and account-deletion
+                page will be published here before the app is released.
+              </p>
+              <ul className="mt-6 flex flex-col gap-3">
+                {lumitaleLegalPages.map((page) => (
+                  <li key={page.href} className="text-[0.9375rem] leading-relaxed text-lt-soft">
+                    <span className="font-semibold text-white">{page.label}</span>
+                    {" — awaiting owner and legal approval"}
+                  </li>
+                ))}
+              </ul>
+            </>
           ) : (
-            <p className="text-[0.9375rem] leading-relaxed text-lt-soft">
-              LumiTale&apos;s Privacy Policy, Terms of Service and account-deletion
-              page will be published here before the app is released.
-            </p>
+            <>
+              {legalState === "draft" ? (
+                <p
+                  role="note"
+                  className="mb-6 rounded-2xl border-2 border-lt-gold bg-lt-night/60 px-5 py-4 text-[0.9375rem] leading-relaxed text-lt-gold"
+                >
+                  <strong>Local draft preview.</strong> These pages are drafts awaiting
+                  owner and legal approval. They are not published and are never
+                  deployed.
+                </p>
+              ) : null}
+              <ul className="flex flex-col gap-4">
+                {lumitaleLegalPages.map((page) => (
+                  <li key={page.href}>
+                    <a
+                      href={page.href}
+                      className="inline-flex min-h-11 items-center font-semibold text-white underline decoration-lt-gold/60 underline-offset-4 hover:decoration-lt-gold"
+                    >
+                      {page.label}
+                    </a>
+                    <p className="text-[0.9375rem] leading-relaxed text-lt-soft">
+                      {page.description}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </>
           )}
         </Block>
 

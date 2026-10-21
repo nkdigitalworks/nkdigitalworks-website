@@ -8,7 +8,8 @@
  *   fixed reasons;
  * - story creation from fixed choices only (no free text, no chat); the AI
  *   service is not enabled yet;
- * - account deletion in the app and on the web.
+ * - account deletion in the app (the web deletion page is not available
+ *   until LumiTale's legal pages are published).
  * Not claimed (not available): store availability, narration/audio,
  * subscriptions, unlimited generation, AI-safety guarantees.
  */
@@ -38,7 +39,7 @@ export const lumitaleParentControl: string[] = [
   "The account belongs to the parent or guardian, verified by email.",
   "Child profiles live inside the parent's account; children do not sign in.",
   "Parents accept the Terms and Privacy Policy before using the app, and read how AI is used before creating a story.",
-  "Deleting the account removes the family's LumiTale records, from the app or on the web.",
+  "The parent can delete the account in the app, which removes the family's LumiTale records. A web deletion page is being prepared and is not available yet.",
 ];
 
 export const lumitaleCreation: string[] = [

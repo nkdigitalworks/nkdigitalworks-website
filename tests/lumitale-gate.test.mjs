@@ -166,6 +166,36 @@ test("publication decision: approval, local drafts, Vercel, default", () => {
   assert.equal(decide({ mode: "build", env: { VERCEL: "1", LUMITALE_LEGAL_DRAFTS: "local" }, ...notReady }).action, "withhold");
 });
 
+test("legal state: withheld, local draft and published are told apart", async () => {
+  const { lumitaleLegalPages, lumitaleLegalPublished, lumitaleLegalState } = await import("../src/lib/lumitale-legal.ts");
+  assert.deepEqual(
+    lumitaleLegalPages.map((page) => page.href),
+    ["/lumitale/privacy", "/lumitale/terms", "/lumitale/delete-account"],
+  );
+  const root = mkdtempSync(path.join(tmpdir(), "lumitale-state-"));
+  const write = (route, html) => {
+    const file = path.join(root, "public", "lumitale", route, "index.html");
+    mkdirSync(path.dirname(file), { recursive: true });
+    writeFileSync(file, html);
+  };
+  try {
+    assert.equal(lumitaleLegalState(root), "withheld", "nothing placed");
+    write("privacy", "<p>Counsel-approved text.</p>");
+    write("terms", "<p>Counsel-approved text.</p>");
+    assert.equal(lumitaleLegalState(root), "withheld", "a missing page is never linked");
+    write("delete-account", '<div class="draft-banner" data-draft-banner>DRAFT</div>');
+    assert.equal(lumitaleLegalState(root), "draft", "one draft page makes the set a draft");
+    assert.equal(lumitaleLegalPublished(root), false, "a draft is never 'published'");
+    write("delete-account", '<span data-legal-review="required">x</span>');
+    assert.equal(lumitaleLegalState(root), "draft");
+    write("delete-account", "<p>Counsel-approved text.</p>");
+    assert.equal(lumitaleLegalState(root), "published");
+    assert.equal(lumitaleLegalPublished(root), true);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
 test("the real gate in a Vercel-like build: withheld by default, fails if approved", () => {
   const run = (env) =>
     spawnSync(process.execPath, [path.join(ROOT, "scripts", "lumitale-legal-gate.mjs")], {

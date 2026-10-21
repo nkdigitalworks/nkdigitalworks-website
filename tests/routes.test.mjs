@@ -135,6 +135,14 @@ describe("production build (LumiTale legal pages withheld)", { skip: !built && "
     assert.ok(page.includes("not yet available to download"));
     assert.ok(page.includes("will be published here before the app is released"));
     assert.ok(!page.includes('href="/lumitale/'), "no links to withheld legal pages");
+    // All three LumiTale pages are named, clearly marked as awaiting approval.
+    for (const label of ["Privacy Policy", "Terms of Service", "Delete your account"]) {
+      assert.ok(page.includes(`>${label}</span> — awaiting owner and legal approval`), label);
+    }
+    assert.ok(!page.includes("Local draft preview"), "no draft notice in a withheld build");
+    // Web deletion is not claimed while the page is unpublished.
+    assert.ok(!page.includes("from the app or on the web"));
+    assert.ok(page.includes("A web deletion page is being prepared and is not available yet."));
     for (const forbidden of ["play.google.com", "apps.apple.com", "Download on", "Get it on", "subscription", "narrat"]) {
       assert.ok(!page.toLowerCase().includes(forbidden.toLowerCase()), forbidden);
     }
@@ -171,6 +179,15 @@ describe("production build (LumiTale legal pages withheld)", { skip: !built && "
   test("the company website policies stay where they were, unchanged in meaning", () => {
     assert.ok(html["/privacy"].body.includes("Effective 30 July 2026"));
     assert.ok(html["/terms"].body.includes("These terms apply to your use of the NK Digital Works website."));
+  });
+
+  test("the company policies stay separate from LumiTale's policies", () => {
+    for (const p of ["/privacy", "/terms"]) {
+      const main = html[p].body.match(/<main[\s\S]*<\/main>/)?.[0] ?? "";
+      assert.ok(main.length > 0, `${p}: main`);
+      assert.ok(!/lumitale/i.test(main), `${p}: no LumiTale content in the company policy`);
+      assert.ok(!html[p].body.includes('<link rel="canonical" href="https://nkdigitalworks.com/lumitale/'), p);
+    }
   });
 
   test("no secret, privileged key or LumiTale draft text in the build output", () => {
@@ -238,5 +255,15 @@ describe("local draft preview (never on Vercel)", {
     assert.ok(privacy.includes("DRAFT — NOT PUBLISHED — LEGAL REVIEW REQUIRED."));
     const config = await (await fetch(`${server.base}/lumitale/assets/config.js`)).text();
     assert.ok(config.includes('publishableKey: "<PUBLISHABLE KEY'), "placeholder key: page fails closed");
+  });
+
+  test("served drafts are noindex, carry review markers, and the deletion form starts hidden", async () => {
+    for (const route of ["privacy", "terms", "delete-account"]) {
+      const html = await (await fetch(`${server.base}/lumitale/${route}`)).text();
+      assert.ok(html.includes('<meta name="robots" content="noindex">'), route);
+      assert.ok(html.includes('data-legal-decision="required"') && html.includes("OWNER AND COUNSEL DECISIONS REQUIRED"), route);
+    }
+    const deletion = await (await fetch(`${server.base}/lumitale/delete-account`)).text();
+    assert.match(deletion, /<form id="signin"[^>]*\bhidden\b/);
   });
 });

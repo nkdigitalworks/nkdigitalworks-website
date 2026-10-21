@@ -23,7 +23,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page("/contact", "yearly", 0.5),
     page("/privacy", "yearly", 0.3),
     page("/terms", "yearly", 0.3),
-    // LumiTale's policies only once they are published (Phase 3J-AU gate).
+    // LumiTale's policies only once they are published (Phase 3J-AU gate);
+    // never local drafts.
     ...(lumitaleLegalPublished()
       ? lumitaleLegalPages.map((legal) => page(legal.href, "yearly", 0.3))
       : []),
