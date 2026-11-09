@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 type Variant = "primary" | "secondary" | "quiet";
 
 const base =
-  "group inline-flex items-center justify-center gap-2 rounded-full text-[0.9375rem] font-semibold tracking-[-0.01em] whitespace-nowrap transition duration-300 ease-out focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-azure";
+  "group inline-flex items-center justify-center gap-2 rounded-full text-[0.9375rem] font-semibold tracking-[-0.01em] text-center transition duration-300 ease-out focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-azure";
 
 const sizes = {
   md: "h-11 px-5",
@@ -13,9 +13,9 @@ const sizes = {
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-linear-to-b from-azure to-electric text-white shadow-[0_10px_30px_-12px_rgb(47_107_255/0.9)] hover:from-white hover:to-mist hover:text-navy hover:shadow-[0_14px_38px_-14px_rgb(95_147_255/0.7)]",
+    "theme-button-primary text-white",
   secondary:
-    "glass text-paper hover:border-white/20 hover:bg-white/[0.09] hover:text-white",
+    "theme-button-secondary text-paper",
   quiet:
     "text-mist hover:text-paper border border-transparent hover:border-white/10",
 };

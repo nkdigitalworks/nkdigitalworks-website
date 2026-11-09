@@ -8,7 +8,7 @@ export function Container({
   className?: string;
 }) {
   return (
-    <div className={`mx-auto w-full max-w-6xl px-6 lg:px-8 ${className}`}>
+    <div className={`mx-auto w-full max-w-[1280px] px-6 lg:px-8 ${className}`}>
       {children}
     </div>
   );
@@ -24,7 +24,7 @@ export function Eyebrow({
 }) {
   return (
     <p
-      className={`inline-flex items-center gap-2.5 text-xs font-semibold tracking-[0.2em] text-dim uppercase ${className}`}
+      className={`inline-flex items-center gap-2.5 text-xs font-semibold tracking-[0.2em] text-[#a6c1e5] uppercase ${className}`}
     >
       <span
         aria-hidden="true"
@@ -59,7 +59,7 @@ export function SectionHeading({
       } ${className}`}
     >
       <Eyebrow>{eyebrow}</Eyebrow>
-      <h2 className="max-w-2xl text-3xl leading-[1.12] font-bold sm:text-4xl lg:text-[2.75rem]">
+      <h2 className="max-w-2xl text-3xl leading-[1.12] font-semibold sm:text-4xl lg:text-[2.5rem]">
         {title}
       </h2>
       {lede ? (

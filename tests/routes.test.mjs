@@ -49,7 +49,7 @@ const gate = (env = {}) =>
     encoding: "utf8",
   });
 
-const PAGES = ["/", "/about", "/apps", "/apps/noorlife", "/apps/lumitale", "/contact", "/privacy", "/terms"];
+const PAGES = ["/", "/about", "/apps", "/apps/noorlife", "/apps/lumitale", "/apps/colorwonder", "/contact", "/privacy", "/terms"];
 
 describe("production build (LumiTale legal pages withheld)", { skip: !built && "run npm run build first" }, () => {
   let server;
@@ -76,8 +76,8 @@ describe("production build (LumiTale legal pages withheld)", { skip: !built && "
 
   test("the homepage is the NK Digital Works company homepage (3J-AX)", () => {
     const home = html["/"].body;
-    assert.ok(home.includes("<title>NK Digital Works — Thoughtful technology, taking shape.</title>"));
-    assert.match(home, /<h1[^>]*>Thoughtful technology, taking shape\.<\/h1>/);
+    assert.ok(home.includes("<title>NK Digitalworks — Building Meaningful Digital Experiences</title>"));
+    assert.match(home, /<h1[^>]*>[\s\S]*?Building Meaningful[\s\S]*?Digital Experiences[\s\S]*?for Everyone\.[\s\S]*?<\/h1>/);
     for (const href of ['href="/apps/noorlife"', 'href="/apps/lumitale"', 'href="/apps"', 'href="/about"', 'href="/contact"']) {
       assert.ok(home.includes(href), href);
     }
@@ -97,7 +97,6 @@ describe("production build (LumiTale legal pages withheld)", { skip: !built && "
   test("NoorLife has its own page with the original content (3J-AX)", () => {
     const home = html["/apps/noorlife"].body;
     for (const text of [
-      "Something thoughtful is taking shape.",
       "Not another app. A more thoughtful way forward.",
       "Built quietly. Revealed carefully.",
       "Stay close to what comes next.",
@@ -109,6 +108,7 @@ describe("production build (LumiTale legal pages withheld)", { skip: !built && "
     ]) {
       assert.ok(home.includes(text), text);
     }
+    assert.match(home, /<h1[^>]*>[\s\S]*?Something thoughtful[\s\S]*?is taking shape\.[\s\S]*?<\/h1>/);
     assert.ok(home.includes("<title>NoorLife — Something Thoughtful Is Taking Shape</title>"));
     assert.ok(home.includes('href="https://nkdigitalworks.com/apps/noorlife"'), "own canonical URL");
   });
@@ -125,8 +125,8 @@ describe("production build (LumiTale legal pages withheld)", { skip: !built && "
     const apps = html["/apps"].body;
     assert.ok(apps.includes(">NoorLife</a>") && apps.includes('href="/apps/noorlife"'));
     assert.ok(apps.includes('href="/apps/lumitale"') && apps.includes(">LumiTale</a>"));
-    assert.ok(apps.includes("Private development"));
-    assert.ok(apps.includes("In development"));
+    assert.ok(apps.includes('>ColorWonder</a>') && apps.includes('href="/apps/colorwonder"'));
+    assert.equal((apps.match(/Launching soon · Sneak peek/g) ?? []).length >= 3, true);
   });
 
   test("the LumiTale page is truthful and never links to unpublished policies", () => {

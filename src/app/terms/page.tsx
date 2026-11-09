@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/terms" },
   // Spread the shared base so og:type/site_name/locale/title/description stay
   // identical to every other route; only `url` is page-specific.
-  openGraph: { ...baseOpenGraph, url: "/terms" },
+  openGraph: { ...baseOpenGraph, title: "Terms of Use — NK Digitalworks", description: "The terms that apply to visitors of the NK Digital Works website.", url: "/terms" },
 };
 
 /** Fixed, human-readable effective date — not generated per request. */

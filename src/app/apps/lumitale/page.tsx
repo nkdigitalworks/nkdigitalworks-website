@@ -69,7 +69,7 @@ function Block({
   children: React.ReactNode;
 }) {
   return (
-    <section aria-labelledby={id} className="rounded-3xl bg-lt-surface/80 p-7 sm:p-9">
+    <section aria-labelledby={id} className="theme-panel rounded-3xl p-7 sm:p-9">
       <h2 id={id} className="font-display text-2xl font-bold text-white">
         {title}
       </h2>
@@ -82,9 +82,9 @@ export default function LumiTalePage() {
   const legalState = lumitaleLegalState();
 
   return (
-    <div className="bg-lt-night">
+    <div className="product-detail lumitale-detail">
       {/* 1. Hero */}
-      <section className="relative overflow-hidden pt-14 pb-16 lg:pt-20 lg:pb-24">
+      <section className="product-masthead lumitale-masthead">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
           <div className="absolute -top-40 right-0 size-[36rem] rounded-full bg-lt-primary/25 blur-3xl" />
           <div className="absolute -bottom-48 -left-24 size-[28rem] rounded-full bg-lt-secondary/20 blur-3xl" />
@@ -138,7 +138,7 @@ export default function LumiTalePage() {
           </h2>
           <ul className="mt-8 grid gap-6 md:grid-cols-2">
             {lumitaleFeatures.map((feature) => (
-              <li key={feature.title} className="rounded-3xl bg-lt-surface/80 p-7 sm:p-9">
+              <li key={feature.title} className="theme-panel rounded-3xl p-7 sm:p-9">
                 <h3 className="font-display text-xl font-bold text-white">
                   {feature.title}
                 </h3>

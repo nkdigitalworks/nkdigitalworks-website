@@ -1,35 +1,22 @@
+import Link from "next/link";
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Eyebrow, SectionHeading } from "@/components/ui/section";
 import { apps } from "@/lib/apps";
 import { enquiryMailto, mailto, site } from "@/lib/site";
 
-/*
- * Company homepage sections (Phase 3J-AX). Every statement rests on facts
- * already published on this site or verified for each application: no
- * founding dates, team size, clients, awards, testimonials or availability
- * claims.
- */
-
-/** "About the studio": what the company develops (anchor #about kept). */
 export function CompanyIntro() {
-  const names = apps.map((app) => app.name);
-  const listed = names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names.at(-1)}` : names[0];
   return (
-    <section id="about" className="scroll-mt-24 py-20 lg:py-28">
+    <section id="about" className="studio-intro theme-section">
       <Container>
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-20">
-          <SectionHeading
-            eyebrow="About the studio"
-            title="An independent studio building mobile applications."
-          />
-          <div className="flex flex-col items-start gap-6 lg:pt-14">
-            <p className="text-base leading-relaxed text-mist/85 sm:text-lg">
-              {site.name} designs and builds its own applications. {names.length === 2 ? "Two are" : `${names.length} are`} in
-              development today: {listed}. Each has its own page, its own identity and, where it needs them, its own policies.
-            </p>
-            <ButtonLink href="/about" variant="secondary" arrow>
-              About {site.name}
-            </ButtonLink>
+        <div className="studio-intro-grid">
+          <div>
+            <Eyebrow>The studio behind the experiences</Eyebrow>
+            <h2>Thoughtful technology.<br /><span className="theme-gradient">Human at heart.</span></h2>
+          </div>
+          <div className="studio-intro-copy">
+            <p>{site.studio}</p>
+            <p>We design and build our own mobile applications. {new Intl.ListFormat("en", { style: "long", type: "conjunction" }).format(apps.map((app) => app.name))} are launching soon. This is a sneak peek at three applications, each with its own identity and a carefully considered experience.</p>
+            <Link href="/about" className="text-link">Meet NK Digitalworks <span aria-hidden="true">↗</span></Link>
           </div>
         </div>
       </Container>
@@ -38,85 +25,32 @@ export function CompanyIntro() {
 }
 
 const approach = [
-  {
-    title: "Built for mobile",
-    copy: "Our applications are designed for mobile, for the devices people already carry every day.",
-  },
-  {
-    title: "Each product stands on its own",
-    copy: "Every application has its own identity, its own page and, where it needs them, its own policies.",
-  },
-  {
-    title: "Privacy in mind",
-    copy: "This website sets no cookies and runs no analytics, and our products are designed so that what matters to people stays theirs.",
-  },
-  {
-    title: "Shared when ready",
-    copy: "Our applications are in development. We describe them carefully and announce availability only when it is real.",
-  },
+  { mark: "01", title: "Built for mobile", copy: "Designed for the devices people already carry every day, with clear, considered experiences." },
+  { mark: "02", title: "An identity of its own", copy: "Every application has its own purpose, its own page and, where needed, its own policies." },
+  { mark: "03", title: "Privacy in mind", copy: "This website sets no cookies and runs no analytics. Care for people guides the way we build." },
+  { mark: "04", title: "Shared when ready", copy: "Our applications are launching soon. These pages offer a sneak peek; download availability will be announced when ready." },
 ];
 
-/** How the studio works: principles backed by verifiable facts. */
 export function CompanyApproach() {
   return (
-    <section className="relative overflow-hidden py-20 lg:py-28">
-      <div
-        aria-hidden="true"
-        className="glow-iris pointer-events-none absolute -right-40 bottom-0 size-[26rem] rounded-full opacity-35 blur-3xl"
-      />
-      <Container className="relative">
-        <SectionHeading eyebrow="How we work" title="Thoughtful by design." />
-        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {approach.map((item) => (
-            <li
-              key={item.title}
-              className="glass ring-gradient flex flex-col gap-3 rounded-2xl p-7 transition-[transform,background-color] duration-400 ease-out hover:-translate-y-1 hover:bg-white/[0.07]"
-            >
-              <h3 className="font-display text-lg font-bold">{item.title}</h3>
-              <p className="text-[0.9375rem] leading-relaxed text-mist/80">
-                {item.copy}
-              </p>
-            </li>
-          ))}
-        </ul>
+    <section className="theme-section approach-section">
+      <Container>
+        <SectionHeading eyebrow="Our approach" title={<>Made with purpose.<br /><span className="theme-gradient">Built with care.</span></>} align="center" lede="Good digital experiences start with thoughtful decisions." />
+        <ol className="approach-grid">
+          {approach.map((item) => <li key={item.mark} className="theme-panel approach-card"><span className="approach-number">{item.mark}</span><h3>{item.title}</h3><p>{item.copy}</p></li>)}
+        </ol>
       </Container>
     </section>
   );
 }
 
-/** Company contact call to action (anchor #contact kept). */
 export function CompanyContact() {
   return (
-    <section id="contact" className="scroll-mt-24 pb-20 lg:pb-28">
+    <section id="contact" className="theme-section contact-banner-section">
       <Container>
-        <div className="ring-gradient relative overflow-hidden rounded-[1.75rem] bg-midnight/70 px-7 py-16 text-center sm:px-12 lg:px-16 lg:py-20">
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-            <div className="grid-veil absolute inset-0" />
-            <div className="glow-electric animate-breathe absolute -top-52 left-1/2 size-[40rem] -translate-x-1/2 rounded-full blur-3xl" />
-          </div>
-          <div className="relative flex flex-col items-center">
-            <Eyebrow>Contact</Eyebrow>
-            <h2 className="mt-6 max-w-2xl text-3xl leading-[1.1] font-extrabold sm:text-4xl lg:text-[2.75rem]">
-              Talk to {site.name}.
-            </h2>
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-mist/85 sm:text-lg">
-              For enquiries about the studio or any of its applications.
-            </p>
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href={enquiryMailto} size="lg" arrow>
-                Get in touch
-              </ButtonLink>
-              <ButtonLink href="/contact" variant="secondary" size="lg">
-                All contact options
-              </ButtonLink>
-            </div>
-            <a
-              href={mailto}
-              className="mt-8 inline-flex min-h-11 items-center font-mono text-sm text-mist underline decoration-white/25 decoration-1 underline-offset-4 transition-colors duration-200 hover:text-paper hover:decoration-azure"
-            >
-              {site.email}
-            </a>
-          </div>
+        <div className="contact-banner">
+          <div><Eyebrow>Let’s connect</Eyebrow><h2>Great things start<br /><span className="theme-gradient">with a conversation.</span></h2><p>Questions about the studio or one of our applications? We would love to hear from you.</p></div>
+          <div className="contact-banner-actions"><ButtonLink href={enquiryMailto} size="lg" arrow>Get in Touch</ButtonLink><a href={mailto}>{site.email}</a><Link href="/contact" className="text-link">All contact options <span aria-hidden="true">↗</span></Link></div>
         </div>
       </Container>
     </section>

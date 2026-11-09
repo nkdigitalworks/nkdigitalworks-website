@@ -34,6 +34,7 @@ export const metadata: Metadata = {
     "mobile applications",
     "NoorLife",
     "LumiTale",
+    "ColorWonder",
   ],
   authors: [{ name: site.name }],
   creator: site.name,
@@ -54,7 +55,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#03060f",
+  themeColor: "#030a23",
   colorScheme: "dark",
 };
 

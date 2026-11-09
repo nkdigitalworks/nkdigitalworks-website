@@ -14,7 +14,7 @@
  */
 import { site } from "@/lib/site";
 
-export type AppStatus = "private-development" | "in-development" | "available";
+export type AppStatus = "private-development" | "in-development" | "launching-soon" | "available";
 
 export type AppArtwork = {
   src: string;
@@ -35,6 +35,10 @@ export type AppEntry = {
   /** The application's own page on this site (existing URLs are preserved). */
   href: string;
   artwork: AppArtwork;
+  /** Optional complete branding image for portfolio cards. */
+  cardArtwork?: AppArtwork;
+  /** Promotional concept artwork, separate from approved logos and screenshots. */
+  promotionalArtwork?: AppArtwork;
   /** Store links: empty until the app is actually published. */
   stores: { label: string; href: string }[];
 };
@@ -45,8 +49,8 @@ export const apps: AppEntry[] = [
     name: site.product,
     summary:
       "A new intelligent digital experience, designed for mobile and currently in private development.",
-    status: "private-development",
-    statusLabel: "Private development · Coming soon",
+    status: "launching-soon",
+    statusLabel: "Launching soon · Sneak peek",
     // NoorLife's own page (Phase 3J-AX; formerly the homepage).
     href: "/apps/noorlife",
     artwork: {
@@ -54,6 +58,12 @@ export const apps: AppEntry[] = [
       width: 1536,
       height: 1024,
       alt: "NoorLife symbol with an AI companion pointing toward it",
+    },
+    promotionalArtwork: {
+      src: "/brand/app-previews/noorlife-phone-concept-v1.png",
+      width: 1536,
+      height: 1024,
+      alt: "NoorLife promotional concept: a cyan and violet illuminated phone displaying the approved heart symbol and friendly robot",
     },
     stores: [],
   },
@@ -63,8 +73,8 @@ export const apps: AppEntry[] = [
     summary:
       "Parent-controlled bedtime storytelling for families with children aged about 3 to 9.",
     category: "Family · Bedtime stories",
-    status: "in-development",
-    statusLabel: "In development · Not yet available",
+    status: "launching-soon",
+    statusLabel: "Launching soon · Sneak peek",
     href: "/apps/lumitale",
     artwork: {
       // Approved app icon (LT-ILL-SETUP-002 Crescent Moon Glow on #0A0E2A),
@@ -73,6 +83,40 @@ export const apps: AppEntry[] = [
       width: 384,
       height: 384,
       alt: "LumiTale app icon: a glowing crescent moon on clouds",
+    },
+    promotionalArtwork: {
+      src: "/brand/app-previews/lumitale-phone-concept-v1.png",
+      width: 1536,
+      height: 1024,
+      alt: "LumiTale promotional concept: a glowing phone with two children on a magical storybook beneath a smiling moon and stars",
+    },
+    stores: [],
+  },
+  {
+    slug: "colorwonder",
+    name: "ColorWonder",
+    summary: "A colourful creative experience for young artists to colour, paint and explore their imagination.",
+    category: "Creativity · Colouring",
+    status: "launching-soon",
+    statusLabel: "Launching soon · Sneak peek",
+    href: "/apps/colorwonder",
+    artwork: {
+      src: "/apps/colorwonder/imagination-artwork.png",
+      width: 1536,
+      height: 1024,
+      alt: "ColorWonder artwork featuring a lion, space, nature, vehicles, fantasy castles and ocean animals",
+    },
+    cardArtwork: {
+      src: "/apps/colorwonder/colorwonder-kids-logo.png",
+      width: 458,
+      height: 593,
+      alt: "Complete ColorWonder branding with paint palette, colourful name, NK Digitalworks byline, Color Paint Create tagline, and two children holding art supplies",
+    },
+    promotionalArtwork: {
+      src: "/brand/app-previews/colorwonder-phone-concept-v1.png",
+      width: 1536,
+      height: 1024,
+      alt: "ColorWonder promotional concept: a glowing phone showing both young artist children, the paint palette logo and colourful art supplies",
     },
     stores: [],
   },

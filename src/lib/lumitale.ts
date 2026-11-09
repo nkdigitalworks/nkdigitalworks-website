@@ -19,7 +19,7 @@ export const lumitale = {
   intro:
     "LumiTale is a bedtime storytelling app for families with children aged about 3 to 9. A parent sets everything up and stays in control; the child gets a calm, magical story at the end of the day.",
   availability:
-    "LumiTale is in development. It is not yet available to download, and there are no store listings yet.",
+    "LumiTale is launching soon. This is a sneak peek at an app in development; it is not yet available to download, and there are no store listings yet.",
 } as const;
 
 export type Feature = { title: string; copy: string };

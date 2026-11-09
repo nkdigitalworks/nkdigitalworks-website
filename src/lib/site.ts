@@ -22,7 +22,7 @@ import type { Metadata } from "next";
 export const site = {
   name: "NK Digital Works",
   product: "NoorLife",
-  statement: "Thoughtful technology, taking shape.",
+  statement: "Building meaningful digital experiences for everyone.",
   studio:
     "NK Digital Works is an independent software studio creating intelligent, human-centred digital products with clarity, care and purpose.",
   email: "hello@nkdigitalworks.com",
@@ -38,9 +38,9 @@ export const seo = {
 
 /** The company homepage and company-level pages (Phase 3J-AX). */
 export const companySeo = {
-  title: "NK Digital Works — Thoughtful technology, taking shape.",
+  title: "NK Digitalworks — Building Meaningful Digital Experiences",
   description:
-    "NK Digital Works is an independent software studio building mobile applications, including NoorLife and LumiTale.",
+    "NK Digital Works is an independent software studio building mobile applications, including NoorLife, LumiTale and ColorWonder. All three are launching soon; explore a sneak peek.",
 } as const;
 
 /**

@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/privacy" },
   // Spread the shared base so og:type/site_name/locale/title/description stay
   // identical to every other route; only `url` is page-specific.
-  openGraph: { ...baseOpenGraph, url: "/privacy" },
+  openGraph: { ...baseOpenGraph, title: "Privacy Policy — NK Digitalworks", description: "How NK Digital Works handles information collected through this website.", url: "/privacy" },
 };
 
 /** Fixed, human-readable effective date — not generated per request. */
